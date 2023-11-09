@@ -1,0 +1,31 @@
+import random
+
+days = ['월요일', '화요일', '수요일', '목요일', '금요일']
+subjects = ['인공지능 수학기초', '영상이해', '인공지능기초와활용', '생활영어회화', '소프트웨어적 사고']
+professors = {'인공지능 수학기초': '민정익', '영상이해': '김철수', '인공지능기초와활용': '이근호', '생활영어회화': '스캇', '소프트웨어적 사고': '짱구'}
+
+def generate_timetable():
+    timetable = [['' for _ in range(5)] for _ in range(6)]
+
+    for subject in subjects:
+        professor = professors[subject]
+        day_options = days.copy()
+
+        while day_options:
+            day = random.choice(day_options)
+            day_index = days.index(day)
+
+            if not any(timetable[i][day_index] == professor for i in range(6)):
+                timetable[subjects.index(subject)][day_index] = professor
+                break
+            else:
+                day_options.remove(day)
+
+    return timetable
+
+def print_timetable(timetable):
+    for i, subject in enumerate(subjects):
+        print(f'{subject} - {professors[subject]}: {", ".join([timetable[i][j] for j in range(5)])}')
+
+timetable = generate_timetable()
+print_timetable(timetable)
